@@ -16,8 +16,8 @@
 #define target_IDE " Arduino IDE 2.3.5 " 
 #define code_dependencies " TBD " // List any libraries and other dependencies
 // Version / Revision / Change Log:
-// #define code_version 0.01 //  0.01 - Created 2025-06-30 by STEAM Clown 
-#define code_version 1.0.0 // Updated with additional template items, for SVCTE Mechatronics Class - 2025-06-30 by STEAM Clown 
+// #define code_version "0.01" //  0.01 - Created 2025-06-30 by STEAM Clown 
+#define code_version "1.0.1" // Updated with additional template items, for SVCTE Mechatronics Class - 2025-06-30 by STEAM Clown 
 #define code_last_modified "2025-06-30 - by STEAM Clown "
 // Additional Comments: 
 //
@@ -133,7 +133,7 @@ void loop() {
   read_armWrist     = analogRead(A4);
   //read_gripperHand  = analogRead(A5); // maybe later...
 
-  digitalWrite(SampleCollected, read_PB_save);   // turn the LED on if PB = 1
+  // digitalWrite(SampleCollected, read_PB_save);   // turn the LED on if PB = 1
 
   Serial.println();
   Serial.println("*** Readings ***");
