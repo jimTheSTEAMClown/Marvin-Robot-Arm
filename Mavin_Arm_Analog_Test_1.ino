@@ -142,6 +142,7 @@ void setup() {
 // ============================================================================
 void loop() {
 // ------------------------------------------
+  // TODO: add "first_time() function to test the first time.  maybe this function can have some global variables/flags it sets, so you can test first time in the loop() or other functions
 //-----------------------------------------------
 // read PB and potentiometers
 
@@ -174,7 +175,7 @@ void loop() {
   }
 
   Serial.print(".");
-  delay(4000);
+  delay(1000);
 }
 
 /**
