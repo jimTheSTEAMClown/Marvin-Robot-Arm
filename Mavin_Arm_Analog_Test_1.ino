@@ -75,13 +75,12 @@ int moveWristDone;
 int moveHandDone;
 // ----------------------
 // Read POT values from Analog pins
-int read_PB_save;
-int read_baseTwist;
-int read_baseShoulder;
-int read_armElbow;
-int read_armWrist;
-int read_gripperHand;
-
+int read_push_button_save_pos_pot; 
+int read_base_servo_twist_pot;
+int read_base_servo_shoulder_pot;
+int read_arm_servo_elbow_pot;
+int read_arm_servo_wrist_pot;
+int read_servo_gripper_hand; // TODO: maybe later...
 
 // ----------------------
 // Pin Definitions
