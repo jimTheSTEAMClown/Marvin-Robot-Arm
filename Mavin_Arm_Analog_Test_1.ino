@@ -19,7 +19,12 @@
 // #define code_version "0.01" //  0.01 - Created 2025-06-30 by STEAM Clown 
 #define code_version "1.0.1" // Updated with additional template items, for SVCTE Mechatronics Class - 2025-06-30 by STEAM Clown 
 #define code_last_modified "2025-06-30 - by STEAM Clown "
-// Additional Comments: 
+// Additional Comments:
+// ------------------------------------------
+// SAFETY - This is where you tell user what Safety issues they should think about
+// !! be sure arm is in rest position before power on !!
+#define safety "// !! be sure arm is in rest position before power on !!"
+// ------------------------------------------
 //
 // ============================================================================
 //
@@ -33,6 +38,8 @@
 // TODO: Tune PID constants for outdoor conditions
 // FIXME: Motors jitter on low battery
 // NOTE: This sensor model has a max range of ~200cm
+
+// TODO: Add a NeoPixel strip for status... Like: PowerGood, ArmPower, ReadPOtPos, etc - This will save digital pins that might just go to an LED
 
 // ============================================================================
 // Variables, Libraries, Flags
@@ -52,7 +59,11 @@ int debug = 1;  // 1 = serial port messages,, 0 = no debug messages
 
 // ------------------------------------------
 // Global Constants & Pins
-
+// Arduino Uno Pins:
+//   Analog pins used:
+//     0,1,2,3,4 used for Position POTs // TODO: add gripper pos to analog 5
+//   Digial Pins:
+#define pot_read_push_button_PIN 2 // Digital Pin 2
 // ----------------------
 // Global Variables
 // ----------------------
@@ -116,7 +127,9 @@ void setup() {
   Serial.println(" ------------------------------------------ "); 
   Serial.println(" --- Begin Of SETUP --- "); 
   Serial.println(" ------------------------------------------ ");
-    
+  // Pin Mode Settings
+    pinMode(pot_read_push_button_PIN, INPUT_PULLUP);
+  
   Serial.println();
   Serial.println(" ------------------------------------------ "); 
   Serial.println(" --- Done With SETUP --- "); 
@@ -132,27 +145,35 @@ void loop() {
 //-----------------------------------------------
 // read PB and potentiometers
 
-  read_push_button_save_pos_pot      = digitalRead(A0); //TODO: Check if I need this Analog for something else?
+  read_push_button_save_pos_pot      = digitalRead(pot_read_push_button_PIN); 
   read_base_servo_twist_pot    = analogRead(A1);
   read_base_servo_shoulder_pot = analogRead(A2);
   read_arm_servo_elbow_pot     = analogRead(A3);
   read_arm_servo_wrist_pot     = analogRead(A4);
   //read_servo_gripper_hand  = analogRead(A5); // TODO: maybe later...
 
-  // digitalWrite(SampleCollected, read_PB_save);   // turn the LED on if PB = 1
+  if(read_push_button_save_pos_pot == 0){
+    read_base_servo_twist_pot    = analogRead(A1);
+    read_base_servo_shoulder_pot = analogRead(A2);
+    read_arm_servo_elbow_pot     = analogRead(A3);
+    read_arm_servo_wrist_pot     = analogRead(A4);
+    // read_servo_gripper_hand  = analogRead(A5); // TODO: maybe later...
+    Serial.println();
+    Serial.println("*** Readings ***");
+    Serial.print("read Push Button that saves Position Pots values: ");
+    Serial.println(read_push_button_save_pos_pot);
+    Serial.print("read base Servo Twist POT: ");
+    Serial.println(read_base_servo_twist_pot);
+    Serial.print("read base Servo shoulder POT: ");
+    Serial.println(read_base_servo_shoulder_pot);
+    Serial.print("read arm Servo arm elbow POT: ");
+    Serial.println(read_arm_servo_elbow_pot);
+    Serial.print("read arm Servor wrist POT: ");
+    Serial.println(read_arm_servo_wrist_pot);
+    // digitalWrite(SampleCollected, read_PB_save);   // turn the LED on if PB = 1
+  }
 
-  Serial.println();
-  Serial.println("*** Readings ***");
-  Serial.print("read Push Button that saves Position Pots values: ");
-  Serial.println(read_push_button_save_pos_pot);
-  Serial.print("read base Servo Twist POT: ");
-  Serial.println(read_base_servo_twist_pot);
-  Serial.print("read base Servo shoulder POT: ");
-  Serial.println(read_base_servo_shoulder_pot);
-  Serial.print("read arm Servo arm elbow POT: ");
-  Serial.println(read_arm_servo_elbow_pot);
-  Serial.print("read arm Servor wrist POT: ");
-  Serial.println(read_arm_servo_wrist_pot);
+  Serial.print(".");
   delay(4000);
 }
 
@@ -180,6 +201,8 @@ void print_code_info_version_status() {
   Serial.println("Code License Types: ");
   Serial.println(code_license);
   Serial.println(code_usage);
-  Serial.println("------------------------------------------");  
+  Serial.println("------------------------------------------"); 
+  Serial.println(safety);
+  Serial.println("------------------------------------------"); 
   Serial.println(" ");  
 }
