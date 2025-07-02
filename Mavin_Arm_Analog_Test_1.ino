@@ -67,6 +67,7 @@ int debug = 1;  // 1 = serial port messages,, 0 = no debug messages
 // ----------------------
 // Global Variables
 // ----------------------
+// FIXME: Update the Servo Names of the servo's
 Servo baseTwist;
 Servo baseShoulder;
 Servo armElbow;
@@ -84,6 +85,7 @@ int moveBaseDone;
 int moveElbowDone;
 int moveWristDone;
 int moveHandDone;
+
 // ----------------------
 // Read POT values from Analog pins
 int read_push_button_save_pos_pot; 
