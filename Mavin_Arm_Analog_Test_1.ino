@@ -146,18 +146,18 @@ void loop() {
 // read PB and potentiometers
 
   read_push_button_save_pos_pot      = digitalRead(pot_read_push_button_PIN); 
-  read_base_servo_twist_pot    = analogRead(A1);
-  read_base_servo_shoulder_pot = analogRead(A2);
-  read_arm_servo_elbow_pot     = analogRead(A3);
-  read_arm_servo_wrist_pot     = analogRead(A4);
-  //read_servo_gripper_hand  = analogRead(A5); // TODO: maybe later...
+  read_base_servo_twist_pot    = analogRead(A0);
+  read_base_servo_shoulder_pot = analogRead(A1);
+  read_arm_servo_elbow_pot     = analogRead(A2);
+  read_arm_servo_wrist_pot     = analogRead(A3);
+  //read_servo_gripper_hand  = analogRead(A4); // TODO: maybe later...
 
   if(read_push_button_save_pos_pot == 0){
-    read_base_servo_twist_pot    = analogRead(A1);
-    read_base_servo_shoulder_pot = analogRead(A2);
-    read_arm_servo_elbow_pot     = analogRead(A3);
-    read_arm_servo_wrist_pot     = analogRead(A4);
-    // read_servo_gripper_hand  = analogRead(A5); // TODO: maybe later...
+    read_base_servo_twist_pot    = analogRead(A0);
+    read_base_servo_shoulder_pot = analogRead(A1);
+    read_arm_servo_elbow_pot     = analogRead(A2);
+    read_arm_servo_wrist_pot     = analogRead(A3);
+    // read_servo_gripper_hand  = analogRead(A4); // TODO: maybe later...
     Serial.println();
     Serial.println("*** Readings ***");
     Serial.print("read Push Button that saves Position Pots values: ");
