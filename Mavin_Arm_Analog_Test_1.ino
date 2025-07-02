@@ -23,6 +23,12 @@
 //
 // ============================================================================
 //
+// Standrds - I Know, it's C++, but I'm going to propogate Python Standards, so Pep8 - https://peps.python.org/pep-0008/
+//   Naming Functions = snake_case()
+//   Naming Variables = snake_case
+//   Constants like Pin #define assignments = All_CAPS_SNAKE_CASE
+// ============================================================================
+//
 // You can use comment tags like these to flag TODOs or bugs during development:
 // TODO: Tune PID constants for outdoor conditions
 // FIXME: Motors jitter on low battery
@@ -83,7 +89,8 @@ int read_gripperHand;
 const int LED = 13; // board LED pin, to be used as some process indicator
 // const int trigPin = 9; // Explain pin, module and use
 // const int echoPin = 10; // Explain pin, module and use
-
+// TODO: what is the convention for using Analog pins and assigning them in the Setup?
+// Analog 0,1,2,3,4 used
 
 
 // ----------------------
@@ -91,7 +98,7 @@ const int LED = 13; // board LED pin, to be used as some process indicator
 // ----------------------
 // void setupLED();
 // void blinkLED();
-void printVersion();
+void print_code_info_version_status();
 
 // ============================================================================
 void setup() {
@@ -126,28 +133,28 @@ void loop() {
 //-----------------------------------------------
 // read PB and potentiometers
 
-  read_PB_save      = digitalRead(A0); //TODO: Check if I need this Analog for something else?
-  read_baseTwist    = analogRead(A1);
-  read_baseShoulder = analogRead(A2);
-  read_armElbow     = analogRead(A3);
-  read_armWrist     = analogRead(A4);
-  //read_gripperHand  = analogRead(A5); // maybe later...
+  read_push_button_save_pos_pot      = digitalRead(A0); //TODO: Check if I need this Analog for something else?
+  read_base_servo_twist_pot    = analogRead(A1);
+  read_base_servo_shoulder_pot = analogRead(A2);
+  read_arm_servo_elbow_pot     = analogRead(A3);
+  read_arm_servo_wrist_pot     = analogRead(A4);
+  //read_servo_gripper_hand  = analogRead(A5); // TODO: maybe later...
 
   // digitalWrite(SampleCollected, read_PB_save);   // turn the LED on if PB = 1
 
   Serial.println();
   Serial.println("*** Readings ***");
-  Serial.print("read_PB_save: ");
-  Serial.println(read_PB_save);
-  Serial.print("read_baseTwist: ");
-  Serial.println(read_baseTwist);
-  Serial.print("read_baseShoulder: ");
-  Serial.println(read_baseShoulder);
-  Serial.print("read_armElbow: ");
-  Serial.println(read_armElbow);
-  Serial.print("read_armWrist: ");
-  Serial.println(read_armWrist);
-  delay(1000);
+  Serial.print("read Push Button that saves Position Pots values: ");
+  Serial.println(read_push_button_save_pos_pot);
+  Serial.print("read base Servo Twist POT: ");
+  Serial.println(read_base_servo_twist_pot);
+  Serial.print("read base Servo shoulder POT: ");
+  Serial.println(read_base_servo_shoulder_pot);
+  Serial.print("read arm Servo arm elbow POT: ");
+  Serial.println(read_arm_servo_elbow_pot);
+  Serial.print("read arm Servor wrist POT: ");
+  Serial.println(read_arm_servo_wrist_pot);
+  delay(4000);
 }
 
 /**
@@ -155,10 +162,6 @@ void loop() {
  */
 // TODO: fix format & check spelling
 void print_code_info_version_status() {
-  // Standrds - I Know, it's C++, but I'm going to propogate Python Standards, so Pep8 - https://peps.python.org/pep-0008/
-  // Naming Functions = snake_case()
-  // Naming Variables = snake_case
-  // Constants like Pin #define assignments = All_CAPS_SNAKE_CASE
   Serial.println("Author, License, Dependencies & Code firmware version info");
   Serial.println("------------------------------------------");  
   Serial.print("Code Author: ");
