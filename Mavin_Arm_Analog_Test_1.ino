@@ -105,7 +105,7 @@ void setup() {
   */  
   Serial.begin(115200);  // be sure serial monitor is set for 'newline' line ending??
   if (info >= 1) {
-    printVersion();
+    print_code_info_version_status();
     }
   Serial.println(" ------------------------------------------ "); 
   Serial.println(" --- Begin Of SETUP --- "); 
@@ -154,7 +154,11 @@ void loop() {
  * @brief Prints Author, License, Dependencies & Code firmware version info to Serial Monitor
  */
 // TODO: fix format & check spelling
-void printVersion() {
+void print_code_info_version_status() {
+  // Standrds - I Know, it's C++, but I'm going to propogate Python Standards, so Pep8 - https://peps.python.org/pep-0008/
+  // Naming Functions = snake_case()
+  // Naming Variables = snake_case
+  // Constants like Pin #define assignments = All_CAPS_SNAKE_CASE
   Serial.println("Author, License, Dependencies & Code firmware version info");
   Serial.println("------------------------------------------");  
   Serial.print("Code Author: ");
