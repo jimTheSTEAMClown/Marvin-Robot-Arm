@@ -67,33 +67,35 @@ int debug = 1;  // 1 = serial port messages,, 0 = no debug messages
 // ----------------------
 // Global Variables
 // ----------------------
-// FIXME: Update the Servo Names of the servo's
-Servo baseTwist;
-Servo baseShoulder;
-Servo armElbow;
-Servo armWrist;
-Servo gripperHand;
+// Servo Names
+Servo servo_base_twist;
+Servo servo_base_shoulder;
+Servo servo_arm_elbow;
+Servo servo_arm_wrist;
+Servo servo_arm_gripper;
 
-int posTwist, posTwistNew;
-int posBase, posBaseNew;
-int posElbow, posElbowNew;
-int posWrist, posWristNew;
-int posHand, posHandNew;
+// Servo Position variables
+int pos_twist, pos_twist_new;
+int pos_shoulder, pos_shoulder_new;
+int pos_elbow, pos_elbow_new;
+int pos_wrist, pos_wrist_new;
+int pos_gripper, pos_gripper_new;
 
-int moveTwistDone;
-int moveBaseDone;
-int moveElbowDone;
-int moveWristDone;
-int moveHandDone;
+// Servo Movment Status
+int move_twist_done_flag;
+int move_shoulder_done_flag;
+int move_elbow_done_flag;
+int move_wrist_done_flag;
+int move_gripper_done_flag;
 
 // ----------------------
 // Read POT values from Analog pins
 int read_push_button_save_pos_pot; 
-int read_base_servo_twist_pot;
-int read_base_servo_shoulder_pot;
-int read_arm_servo_elbow_pot;
-int read_arm_servo_wrist_pot;
-int read_servo_gripper_hand; // TODO: maybe later...
+int read_servo_base_twist_pot;
+int read_servo_base_shoulder_pot;
+int read_servo_arm_elbow_pot;
+int read_servo_arm_wrist_pot;
+int read_servo_arm_gripper_pot; // TODO: maybe later...
 
 // ----------------------
 // Pin Definitions
@@ -147,32 +149,33 @@ void loop() {
   // TODO: add "first_time() function to test the first time.  maybe this function can have some global variables/flags it sets, so you can test first time in the loop() or other functions
 //-----------------------------------------------
 // read PB and potentiometers
-
   read_push_button_save_pos_pot      = digitalRead(pot_read_push_button_PIN); 
-  read_base_servo_twist_pot    = analogRead(A0);
-  read_base_servo_shoulder_pot = analogRead(A1);
-  read_arm_servo_elbow_pot     = analogRead(A2);
-  read_arm_servo_wrist_pot     = analogRead(A3);
-  //read_servo_gripper_hand  = analogRead(A4); // TODO: maybe later...
+  read_servo_base_twist_pot    = analogRead(A0);
+  read_servo_base_shoulder_pot = analogRead(A1);
+  read_servo_arm_elbow_pot     = analogRead(A2);
+  read_servo_arm_wrist_pot     = analogRead(A3);
+  //read_servo_arm_gripper_pot  = analogRead(A4); // TODO: maybe later...
 
   if(read_push_button_save_pos_pot == 0){
-    read_base_servo_twist_pot    = analogRead(A0);
-    read_base_servo_shoulder_pot = analogRead(A1);
-    read_arm_servo_elbow_pot     = analogRead(A2);
-    read_arm_servo_wrist_pot     = analogRead(A3);
-    // read_servo_gripper_hand  = analogRead(A4); // TODO: maybe later...
+    read_servo_base_twist_pot    = analogRead(A0);
+    read_servo_base_shoulder_pot = analogRead(A1);
+    read_servo_arm_elbow_pot     = analogRead(A2);
+    read_servo_arm_wrist_pot     = analogRead(A3);
+    //read_servo_arm_gripper_pot  = analogRead(A4); // TODO: maybe later...
     Serial.println();
     Serial.println("*** Readings ***");
-    Serial.print("read Push Button that saves Position Pots values: ");
+    Serial.print("Read Push Button that saves Position Pots values: ");
     Serial.println(read_push_button_save_pos_pot);
-    Serial.print("read base Servo Twist POT: ");
-    Serial.println(read_base_servo_twist_pot);
-    Serial.print("read base Servo shoulder POT: ");
-    Serial.println(read_base_servo_shoulder_pot);
-    Serial.print("read arm Servo arm elbow POT: ");
-    Serial.println(read_arm_servo_elbow_pot);
-    Serial.print("read arm Servor wrist POT: ");
-    Serial.println(read_arm_servo_wrist_pot);
+    Serial.print("Read Servo Base Twist POT: ");
+    Serial.println(read_servo_base_twist_pot);
+    Serial.print("Read Servo Base Shoulder POT: ");
+    Serial.println(read_servo_base_shoulder_pot);
+    Serial.print("Read Servo Arm Elbow POT: ");
+    Serial.println(read_servo_arm_elbow_pot);
+    Serial.print("Read Servor Arm Wrist POT: ");
+    Serial.println(read_servo_arm_wrist_pot);
+    // Serial.print("Read Servo Arm Gripper POT ");
+    // Serial.println(read_servo_arm_gripper_pot);
     // digitalWrite(SampleCollected, read_PB_save);   // turn the LED on if PB = 1
   }
 
