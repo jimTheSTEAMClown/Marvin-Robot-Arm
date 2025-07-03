@@ -74,6 +74,11 @@ Servo servo_arm_elbow;
 Servo servo_arm_wrist;
 Servo servo_arm_gripper;
 
+// combos (size & rate): 10/20 & 25, 20 & 50, 30 & 100
+// FIXME: Should this be a constant, and a #define
+int step_size = 1; // 20 seems good, lower is smoother
+int step_rate = 6; // 25 for faster moves, 50 or 100? for more smoothness
+
 // Servo Position variables
 int pos_twist, pos_twist_new;
 int pos_shoulder, pos_shoulder_new;
@@ -81,12 +86,19 @@ int pos_elbow, pos_elbow_new;
 int pos_wrist, pos_wrist_new;
 int pos_gripper, pos_gripper_new;
 
+// so far these are unused:
+int pos_twist_offset    = 0;  // calibration offset
+int pos_shoulder_offset = 0;  // calibration offset
+int pos_elbow_offset     = 0;  // calibration offset
+int pos_wrist_offset     = 0;  // calibration offset
+int pos_gripper-offset  = 0;  // calibration offset
+
 // Servo Movment Status
-int move_twist_done_flag;
-int move_shoulder_done_flag;
-int move_elbow_done_flag;
-int move_wrist_done_flag;
-int move_gripper_done_flag;
+int move_twist_done_FLAG;
+int move_shoulder_done_FLAG;
+int move_elbow_done_FLAG;
+int move_wrist_done_FLAG;
+int move_gripper_done_FLAG;
 
 // ----------------------
 // Read POT values from Analog pins
@@ -113,6 +125,7 @@ const int LED = 13; // board LED pin, to be used as some process indicator
 // void setupLED();
 // void blinkLED();
 void print_code_info_version_status();
+void move_all_servos();
 
 // ============================================================================
 void setup() {
@@ -133,6 +146,29 @@ void setup() {
   Serial.println(" ------------------------------------------ ");
   // Pin Mode Settings
     pinMode(pot_read_push_button_PIN, INPUT_PULLUP);
+ // Servo Pins 5/6/9/10/11
+  servo_base_twist.attach(5);
+  servo_base_shoulder.attach(6);
+  servo_arm_elbow.attach(9);
+  servo_arm_wrist.attach(10);
+  servo_arm_gripper.attach(11);
+
+  // Rest position for Marvin (twist centered, base back, elbow closed, wrist straight, hand closed)
+  pos_twist = 1484;  // front & slightly right of center to rest on bucket
+  pos_shoulder  = 2000;  // back flat
+  pos_elbow = 1000;  // closed (folded)
+  pos_wrist = 1444;  // straight out
+  //posWrist = 1575;  // straight out
+  pos_gripper  = 2000;  // open gripper
+  //posHand  = 1200;  // closed gripper
+
+  pos_twist_new = pos_twist;         // update new position
+  pos_shoulder_new  = pos_shoulder;  // update new position
+  pos_elbow_new = pos_elbow          // update new position
+  pos_wrist_new = pos_wrist;         // update new position
+  pos_gripper_new  = pos_gripper;    // update new position
+
+  move_all_servos_2_home();  // be sure arm is in rest position before power on!
   
   Serial.println();
   Serial.println(" ------------------------------------------ "); 
@@ -181,7 +217,45 @@ void loop() {
 
   Serial.print(".");
   delay(1000);
+  move_all_servos_2_home();
 }
+
+
+
+void move_all_servos_2_home() {
+  // move all servos to "home" positions simultaneously
+
+  // Servo Movment Status
+  move_twist_done_FLAG = 0;
+  move_shoulder_done_FLAG = 0;
+  move_elbow_done_FLAG = 0;
+  move_wrist_done_FLAG = 0;
+  move_gripper_done_FLAG = 0;
+
+  // delete later, just here to edits
+  //pos_shoulder_new  = pos_shoulder;  // update new position
+  //pos_elbow_new = pos_elbow          // update new position
+  //pos_wrist_new = pos_wrist;         // update new position
+  //pos_gripper_new  = pos_gripper;    // update new position
+
+  // set Servo Twist Base Position
+    if (pos_twist_new > pos_twist) {
+      pos_twist = pos_twist + step_size;  // stepSize in microseconds
+    }
+    else if (pos_twist_new < pos_twist) {
+      pos_twist = pos_twist - step_size;  // stepSize in microseconds
+    }
+    else if (pos_twist_new == pos_twist) {
+      move_twist_done_FLAG = 1;
+    }
+    else {
+      Serial.println("should never see this message - error in Twist Servo Movment Logic");
+    }
+    servo_base_twist.writeMicroseconds(pos_twist + pos_twist_offset);  // set Twist servo
+
+
+}
+  
 
 /**
  * @brief Prints Author, License, Dependencies & Code firmware version info to Serial Monitor
