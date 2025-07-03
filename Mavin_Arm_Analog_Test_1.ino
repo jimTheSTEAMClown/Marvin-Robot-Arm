@@ -91,7 +91,7 @@ int pos_twist_offset    = 0;  // calibration offset
 int pos_shoulder_offset = 0;  // calibration offset
 int pos_elbow_offset     = 0;  // calibration offset
 int pos_wrist_offset     = 0;  // calibration offset
-int pos_gripper-offset  = 0;  // calibration offset
+int pos_gripper_offset  = 0;  // calibration offset
 
 // Servo Movment Status
 int move_twist_done_FLAG;
@@ -164,7 +164,7 @@ void setup() {
 
   pos_twist_new = pos_twist;         // update new position
   pos_shoulder_new  = pos_shoulder;  // update new position
-  pos_elbow_new = pos_elbow          // update new position
+  pos_elbow_new = pos_elbow;          // update new position
   pos_wrist_new = pos_wrist;         // update new position
   pos_gripper_new  = pos_gripper;    // update new position
 
