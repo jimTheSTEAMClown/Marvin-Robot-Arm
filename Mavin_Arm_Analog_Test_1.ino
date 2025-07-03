@@ -225,7 +225,7 @@ void loop() {
 void move_all_servos_2_pos() {
   // move all servos to "home" positions simultaneously
   Serial.println(pos_twist + pos_twist_offset);
-  servo_twist_pos = map((pos_twist + pos_twist_offset), 0, 1023, 0, 180); // mapping function
+  int servo_twist_pos = map((pos_twist + pos_twist_offset), 0, 1023, 0, 180); // mapping function
   Serial.println(servo_twist_pos);
   servo_base_twist.write(servo_twist_pos);  // set Twist servo
 }
