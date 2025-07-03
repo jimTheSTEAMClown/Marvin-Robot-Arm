@@ -125,6 +125,7 @@ const int LED = 13; // board LED pin, to be used as some process indicator
 // void setupLED();
 // void blinkLED();
 void print_code_info_version_status();
+void move_all_servos_2_pos();
 void move_all_servos();
 
 // ============================================================================
@@ -168,7 +169,7 @@ void setup() {
   pos_wrist_new = pos_wrist;         // update new position
   pos_gripper_new  = pos_gripper;    // update new position
 
-  move_all_servos_2_home();  // be sure arm is in rest position before power on!
+  // move_all_servos_2_home();  // be sure arm is in rest position before power on!
   
   Serial.println();
   Serial.println(" ------------------------------------------ "); 
@@ -217,10 +218,17 @@ void loop() {
 
   Serial.print(".");
   delay(1000);
-  move_all_servos_2_home();
+  pos_twist = read_servo_base_twist_pot;
+  move_all_servos_2_pos();
 }
 
-
+void move_all_servos_2_pos() {
+  // move all servos to "home" positions simultaneously
+  Serial.println(pos_twist + pos_twist_offset);
+  servo_twist_pos = map((pos_twist + pos_twist_offset), 0, 1023, 0, 180); // mapping function
+  Serial.println(servo_twist_pos);
+  servo_base_twist.write(servo_twist_pos);  // set Twist servo
+}
 
 void move_all_servos_2_home() {
   // move all servos to "home" positions simultaneously
