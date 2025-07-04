@@ -1,4 +1,4 @@
 # images/image_readme.md
 ![Screenshot of a comment on a GitHub issue showing an image, added in the Markdown, of an Octocat smiling and raising a tentacle.](https://myoctocat.com/assets/images/base-octocat.svg)
 
-![Marvin Drove Motors](images/motors.jpg)
+![Marvin Drove Motors](https://github.com/jimTheSTEAMClown/Marvin-Robot-Arm/blob/main/images/motors.jpg)
