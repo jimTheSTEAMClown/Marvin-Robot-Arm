@@ -197,6 +197,7 @@ void loop() {
   // TODO: add "first_time() function to test the first time.  maybe this function can have some global variables/flags it sets, so you can test first time in the loop() or other functions
 //-----------------------------------------------
 // read PB and potentiometers
+  read_pot();
   val_push_button_save_pos_pot = digitalRead(pot_read_push_button_PIN); 
   
 /* read_servo_base_twist_pot     = analogRead(A0);
@@ -205,7 +206,7 @@ void loop() {
   read_servo_arm_wrist_pot      = analogRead(A3);
   //read_servo_arm_gripper_pot  = analogRead(A4); // TODO: maybe later...
 */
-
+   
   if(val_push_button_save_pos_pot == 0){
     read_pot();
   }
@@ -235,8 +236,7 @@ void loop() {
 
   Serial.print(".");
   delay(1000);
-  pos_twist = read_servo_base_twist_pot;
-  move_all_servos_2_pos();
+  
 }
 
 void read_pot(){
